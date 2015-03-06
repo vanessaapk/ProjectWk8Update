@@ -1,0 +1,27 @@
+def read_contigs_file(fname):
+    lines = open(fname).read().splitlines()
+    contigs = {}
+    for i in range(0, len(lines) - 1, 2):
+        toks = lines[i].split()
+        tok = toks[11] + " " + toks[12] + " " + toks[16]
+        contigs[tok] = lines[i + 1]
+    return contigs
+
+# function to write a dictonary. Each line contains the key and the value
+def write_dict(d, fname):
+    fhand = open(fname, "w")
+    for key in d:
+        fhand.write(key + " " + d[key] + "\n")
+    fhand.close()
+
+# read in the probes file
+uce = read_uce_file("uce-2.5k-probes.fasta")
+
+# read in the contigs file
+contigs = read_contigs_file("birds-contigs-assembled-from-uce-loci.fasta")
+
+# write the uce dictionary
+write_dict(uce, "uce-file.txt")
+
+# write the contigs dictionary
+write_dict(contigs, "contigs-file.txt")
